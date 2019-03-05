@@ -7,14 +7,14 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 function NothingPlugin() {
-	this.apply = function(){};
+	this.apply = function _() {};
 }
 
 const config = env => ({
 	entry: './src/index.jsx',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].js'
+		filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].js',
 	},
 	devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
 	module: {
@@ -28,7 +28,7 @@ const config = env => ({
 			{
 				test: /\.(js|jsx)$/,
 				use: 'babel-loader',
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(css|less)$/,
@@ -37,37 +37,37 @@ const config = env => ({
 					{
 						loader: 'css-loader',
 						options: {
-							importLoaders: 2
-						}
+							importLoaders: 2,
+						},
 					},
 					'postcss-loader',
-					'less-loader'
-				]
-			}
-		]
+					'less-loader',
+				],
+			},
+		],
 	},
 	resolve: {
 		extensions: [
 			'.js',
 			'.jsx',
-			'.mjs'
-		]
+			'.mjs',
+		],
 	},
 	devServer: {
-		contentBase: './dist'
+		contentBase: './dist',
 	},
 	plugins: [
 		new CleanWebpackPlugin(['dist']),
 		env && env.analyze ? new BundleAnalyzerPlugin() : new NothingPlugin(),
 		new HtmlWebpackPlugin({
-			template: 'public/index.html'
+			template: 'public/index.html',
 		}),
 		env && env.NODE_ENV === 'production'
 			? new MiniCssExtractPlugin({
 				chunkFilename: '[id].css',
 				filename: '[name].[contenthash].css',
 			})
-			: new NothingPlugin()
+			: new NothingPlugin(),
 	],
 	optimization: {
 		minimizer: [
