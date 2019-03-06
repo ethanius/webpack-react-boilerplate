@@ -1,6 +1,4 @@
 module.exports = api => {
-	api.cache.using(() => process.env.NODE_ENV);
-
 	const presets = [
 		[
 			'@babel/preset-env',
@@ -15,6 +13,11 @@ module.exports = api => {
 		'@babel/plugin-syntax-dynamic-import',
 	];
 
+	/*
+	Tohle je nevim proc vzdycky development a production do toho neumim dostat.
+	Baleni ale jinak funguje, kdyz vynutim tu spravnou vetev,
+	tak tam chybi pak propTypes a hot-loader.
+	*/
 	if (api.env('production')) {
 		plugins.push(['transform-react-remove-prop-types', {
 			removeImport: true,
@@ -22,11 +25,6 @@ module.exports = api => {
 	} else {
 		plugins.push('react-hot-loader/babel');
 	}
-	/*
-	if (process.env.NODE_ENV !== 'production') {
-		plugins.push('react-hot-loader/babel');
-	}
-	*/
 
 	return {
 		presets,

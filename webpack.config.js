@@ -11,7 +11,7 @@ function NothingPlugin() {
 }
 
 const config = env => ({
-	entry: './src/index.jsx',
+	entry: env && env.NODE_ENV === 'production' ? './src/index.jsx' : './src/devIndex.jsx',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].js',
