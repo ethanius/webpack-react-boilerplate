@@ -44,6 +44,21 @@ const config = env => ({
 					'less-loader',
 				],
 			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 2048,
+						},
+					},
+				],
+			},
+			{
+				test: /\.(woff|woff2|eot|ttf|otf)$/,
+				use: 'file-loader',
+			},
 		],
 	},
 	resolve: {
