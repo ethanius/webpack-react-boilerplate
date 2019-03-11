@@ -207,6 +207,23 @@ module.exports = {
 		"yield-star-spacing": ["error", "after"],
 
 		// React
-		"react/jsx-indent": [4, "tab"]
+		"react/button-has-type": "error",
+		"react/no-access-state-in-setstate": "error",
+		"react/no-array-index-key": "error",
+		"react/no-children-prop": "error",
+		"react/no-danger-with-children": "error",
+		"react/no-deprecated": "error",
+		"react/no-did-mount-set-state": "error",
+		"react/no-did-update-set-state": "error",
+		"react/no-direct-mutation-state": "error",
+		"react/no-find-dom-node": "error",
+		"react/no-is-mounted": "error",
+		"react/no-multi-comp": ["error", { "ignoreStateless": true }],
+		"react/no-redundant-should-component-update": "error",
+		"react/no-string-refs": "error",
+		"react/no-this-in-sfc": "error",
+		"react/no-unsafe": "error",
+
+		// "react/jsx-indent": [4, "tab"]
 	}
 };

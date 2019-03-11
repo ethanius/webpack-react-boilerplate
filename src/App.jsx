@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Suspense } from 'react';
 
 const LazyImage = React.lazy(() => import('./Image'));
