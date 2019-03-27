@@ -1,3 +1,4 @@
+/* eslint-env amd, node */
 module.exports = api => {
 	const presets = [
 		[
