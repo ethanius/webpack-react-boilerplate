@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { hot } from 'react-hot-loader/root';
 
 const LazyImage = React.lazy(() => import('./Image' /* webpackChunkName: "image" */));
 
@@ -11,4 +12,4 @@ const App = () => (
 	</div>
 );
 
-export default App;
+export default hot(App);

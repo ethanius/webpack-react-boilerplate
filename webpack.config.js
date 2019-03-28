@@ -7,110 +7,121 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-function NothingPlugin() {
-	this.apply = function nf() {};
-}
+const config = env => {
+	const analyze = env && env.analyze ? [new BundleAnalyzerPlugin()] : [];
 
-const config = env => ({
-	entry: env && env.NODE_ENV === 'production' ? './src/index.jsx' : './src/devIndex.jsx',
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].js',
-	},
-	devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
-	module: {
-		rules: [
-			{
-				enforce: 'pre',
-				test: /\.(js|jsx)$/u,
-				exclude: /node_modules/u,
-				loader: 'eslint-loader',
-			},
-			{
-				test: /\.(js|jsx)$/u,
-				use: 'babel-loader',
-				exclude: /node_modules/u,
-			},
-			{
-				test: /\.(css|less)$/u,
-				use: [
-					env && env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 2,
-						},
-					},
-					'postcss-loader',
-					'less-loader',
-				],
-			},
-			{
-				test: /\.(png|svg|jpg|gif)$/u,
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							limit: 2048,
-						},
-					},
-				],
-			},
-			{
-				test: /\.(woff|woff2|eot|ttf|otf)$/u,
-				use: 'file-loader',
-			},
-		],
-	},
-	resolve: {
-		extensions: [
-			'.js',
-			'.jsx',
-			'.mjs',
-		],
-	},
-	devServer: {
-		contentBase: './dist',
-	},
-	plugins: [
+	const miniCssExtractPlugin = env && env.NODE_ENV === 'production'
+		? [
+			new MiniCssExtractPlugin({
+				chunkFilename: '[id].css',
+				filename: '[name].[contenthash].css',
+			}),
+		]
+		: [];
+
+	const plugins = [
 		new CleanWebpackPlugin(['dist']),
-		env && env.analyze ? new BundleAnalyzerPlugin() : new NothingPlugin(),
+		...analyze,
 		new HtmlWebpackPlugin({
 			template: 'public/index.html',
 		}),
-		env && env.NODE_ENV === 'production'
-			? new MiniCssExtractPlugin({
-				chunkFilename: '[id].css',
-				filename: '[name].[contenthash].css',
-			})
-			: new NothingPlugin(),
-	],
-	optimization: {
-		minimizer: [
-			new UglifyJsPlugin({
-				cache: true,
-				parallel: true,
-				sourceMap: true,
-			}),
-			new OptimizeCSSAssetsPlugin({}),
-		],
-		splitChunks: {
-			cacheGroups: {
-				vendor: {
-					test: /node_modules/u,
-					chunks: 'initial',
-					name: 'vendor',
-					enforce: true,
+		...miniCssExtractPlugin,
+	];
+
+	return {
+		entry: './src/index.jsx',
+		output: {
+			path: path.resolve(__dirname, 'dist'),
+			filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].js',
+		},
+		devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
+		module: {
+			rules: [
+				{
+					enforce: 'pre',
+					test: /\.(js|jsx)$/u,
+					exclude: /node_modules/u,
+					loader: 'eslint-loader',
 				},
-				styles: {
-					name: 'styles',
+				{
+					test: /\.(js|jsx)$/u,
+					use: 'babel-loader',
+					exclude: /node_modules/u,
+				},
+				{
+					test: /\.(js|jsx)?$/u,
+					include: /node_modules/u,
+					use: ['react-hot-loader/webpack'],
+				},
+				{
 					test: /\.(css|less)$/u,
-					chunks: 'all',
-					enforce: true,
+					use: [
+						env && env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+						{
+							loader: 'css-loader',
+							options: {
+								importLoaders: 2,
+							},
+						},
+						'postcss-loader',
+						'less-loader',
+					],
+				},
+				{
+					test: /\.(png|svg|jpg|gif)$/u,
+					use: [
+						{
+							loader: 'url-loader',
+							options: {
+								limit: 2048,
+							},
+						},
+					],
+				},
+				{
+					test: /\.(woff|woff2|eot|ttf|otf)$/u,
+					use: 'file-loader',
+				},
+			],
+		},
+		resolve: {
+			extensions: [
+				'.js',
+				'.jsx',
+				'.mjs',
+			],
+		},
+		devServer: {
+			contentBase: './dist',
+		},
+		plugins,
+		optimization: {
+			minimizer: [
+				new UglifyJsPlugin({
+					cache: true,
+					parallel: true,
+					sourceMap: true,
+				}),
+				new OptimizeCSSAssetsPlugin({}),
+			],
+			splitChunks: {
+				cacheGroups: {
+					vendor: {
+						test: /node_modules/u,
+						chunks: 'initial',
+						name: 'vendor',
+						enforce: true,
+					},
+					styles: {
+						name: 'styles',
+						test: /\.(css|less)$/u,
+						chunks: 'all',
+						enforce: true,
+					},
 				},
 			},
 		},
-	},
-});
+	};
+};
 
 module.exports = config;
