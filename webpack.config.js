@@ -8,9 +8,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = env => {
+	const production = env && env.NODE_ENV === 'production';
 	const analyze = env && env.analyze ? [new BundleAnalyzerPlugin()] : [];
-
-	const miniCssExtractPlugin = env && env.NODE_ENV === 'production'
+	const miniCssExtractPlugin = production
 		? [
 			new MiniCssExtractPlugin({
 				chunkFilename: '[id].css',
@@ -18,7 +18,6 @@ const config = env => {
 			}),
 		]
 		: [];
-
 	const plugins = [
 		new CleanWebpackPlugin(['dist']),
 		...analyze,
@@ -32,9 +31,9 @@ const config = env => {
 		entry: './src/index.jsx',
 		output: {
 			path: path.resolve(__dirname, 'dist'),
-			filename: env && env.NODE_ENV === 'production' ? '[name].[contenthash].js' : '[name].js',
+			filename: production ? '[name].[contenthash].js' : '[name].js',
 		},
-		devtool: env && env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
+		devtool: production ? 'source-map' : 'cheap-module-eval-source-map',
 		module: {
 			rules: [
 				{
@@ -45,8 +44,32 @@ const config = env => {
 				},
 				{
 					test: /\.(js|jsx)$/u,
-					use: 'babel-loader',
 					exclude: /node_modules/u,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: [
+								[
+									'@babel/preset-env',
+									{
+										modules: false,
+										useBuiltIns: 'usage',
+										corejs: '3',
+									},
+								],
+								'@babel/preset-react',
+							],
+							plugins: [
+								'@babel/plugin-proposal-class-properties',
+								'@babel/plugin-syntax-dynamic-import',
+								production
+									? ['transform-react-remove-prop-types', {
+										removeImport: true,
+									}]
+									: 'react-hot-loader/babel',
+							],
+						},
+					},
 				},
 				{
 					test: /\.(js|jsx)?$/u,
@@ -56,7 +79,7 @@ const config = env => {
 				{
 					test: /\.(css|less)$/u,
 					use: [
-						env && env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+						production ? MiniCssExtractPlugin.loader : 'style-loader',
 						{
 							loader: 'css-loader',
 							options: {
