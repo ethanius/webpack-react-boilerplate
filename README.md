@@ -30,7 +30,7 @@ npm install
 ```sh
 npm start
 ```
-Následně vývojový web běží na http://localhost:3000/.
+Následně vývojový web běží na http://localhost:8080/.
 
 ## Vytvoření produkční verze
 
@@ -50,3 +50,4 @@ npm run build-dev
 ```sh
 npm run analyze
 ```
+Graf velikosti je pak vidět na http://127.0.0.1:8888/. Ukazuje to produkční bundle, protože sledovat velikost toho vývojového nedává smysl. Ten je prostě obrovský.
