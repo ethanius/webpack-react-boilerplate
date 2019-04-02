@@ -6,6 +6,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const config = env => {
 	const production = env && env.NODE_ENV === 'production';
@@ -20,6 +21,9 @@ const config = env => {
 		: [];
 	const plugins = [
 		new CleanWebpackPlugin(['dist']),
+		new StyleLintPlugin({
+			syntax: 'less',
+		}),
 		...analyze,
 		new HtmlWebpackPlugin({
 			template: 'public/index.html',

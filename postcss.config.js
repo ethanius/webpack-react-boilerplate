@@ -1,4 +1,4 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint-env amd, node */
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
