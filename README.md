@@ -1,33 +1,53 @@
-# empty-project
+# Webpack-React-Boilerplate
 
-Empty project.
+Pomocí tohohle lze velmi rychle rozjet projekt s Reactem. Použité nástroje:
+* React 16.8
+* Less
+* Babel 7
+  * do produkce se odstraňuje PropTypes
+  * v devu je hort reload modul pro React
+* ESLint
+* Stylelint
+* Browserslist
+* Autoprefixer
+* Webpack 4
+  * Code splitting (otestováno s pomocí React.lazy a React.Suspension)
+  * Minifikace a verzování assetů
+  * hot reloading JS i CSS
+  * analýza velikosti bundle
+  * source mapy
 
-## Building and running on localhost
-
-First install dependencies:
+## Instalace projektu
 
 ```sh
+git clone git@github.com:ethanius/webpack-react-boilerplate.git projekt
+cd projekt
 npm install
 ```
 
-To run in hot module reloading mode:
+## Spuštění pro vývoj
 
 ```sh
 npm start
 ```
+Následně vývojový web běží na http://localhost:8080/.
 
-To create a production build:
+## Vytvoření produkční verze
 
 ```sh
 npm run build-prod
 ```
+V podadresáři `dist` je k nalezení sbírka assetů a index.html soubor. Je třeba to pak někam nahrát či zabalit do balíku po svém.
 
-To create a development build:
+## Vytvoření vývojové verze (bez spuštění)
 
 ```sh
 npm run build-dev
 ```
 
-## Running
+## Analýza
 
-Open the file `dist/index.html` in your browser
+```sh
+npm run analyze
+```
+Graf velikosti je pak vidět na http://127.0.0.1:8888/. Ukazuje to produkční bundle, protože sledovat velikost toho vývojového nedává smysl. Ten je prostě obrovský.
