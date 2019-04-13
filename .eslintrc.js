@@ -5,6 +5,9 @@ module.exports = {
 		browser: true,
 		es6: true,
 	},
+	"globals": {
+        "SMap": 'readonly',
+    },
 	parserOptions: {
 		ecmaVersion: 2018,
 		sourceType: "module",
