@@ -11,13 +11,14 @@ class MapyMap extends Component {
 		super(props);
 
 		this.map = null;
+		this.mapRef = React.createRef();
 	}
 
 	componentDidMount() {
 		const center = SMap.Coords.fromWGS84(...this.props.center);
 
-		this.map = new SMap(this.mapRef, center, this.props.zoom);
-		//this.map.addDefaultLayer(SMap.DEF_BASE).enable();
+		this.map = new SMap(this.mapRef.current, center, this.props.zoom);
+		this.forceUpdate();
 	}
 
 	componentWillUnmount() {
@@ -31,8 +32,10 @@ class MapyMap extends Component {
 	render() {
 		const { center, zoom, ...props } = this.props;
 
-		// eslint-disable-next-line no-return-assign
-		return <div {...props} ref={ref => this.mapRef = ref}></div>;
+		return <MapContext.Provider value={{ map: this.map }}>
+			<div {...props} ref={this.mapRef}></div>
+			{this.map ? this.props.children : null}
+		</MapContext.Provider>;
 	}
 }
 
@@ -46,6 +49,7 @@ MapyMap.defaultProps = {
 MapyMap.propTypes = {
 	center: PropTypes.arrayOf(PropTypes.number),
 	zoom: PropTypes.number,
+	children: PropTypes.any,
 };
 
 export default MapyMap;

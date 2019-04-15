@@ -1,25 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MapContext from '../../contexts/mapyMap';
 
 class MapyLayer extends Component {
-	constructor(props) {
-		super(props);
+	componentDidMount() {
+		const context = this.context;
 
-		this.layer = null;
+		if (context.map) {
+			context.map.addDefaultLayer(this.props.name).enable();
+		}
 	}
 
+	// eslint-disable-next-line class-methods-use-this
 	render() {
-		const { type, ...props } = this.props;
-
-		return <div {...props}></div>;
+		return null;
 	}
 }
 
-MapyLayer.defaultProps = {
-};
+MapyLayer.contextType = MapContext;
 
 MapyLayer.propTypes = {
-	type: PropTypes.string.isRequired,
+	map: PropTypes.any,
+	name: PropTypes.any,
 };
 
-export default MapyLayer;
+const ConnectedMapyLayer = props => (
+	<MapContext.Consumer>
+		{({ map }) => map
+			? <MapyLayer
+				{...props}
+				map={map}
+			/>
+			: null
+		}
+	</MapContext.Consumer>
+);
+
+export default ConnectedMapyLayer;
