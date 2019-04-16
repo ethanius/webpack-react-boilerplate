@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MapContext from '../../contexts/mapyMap';
+import MapContext from '~/contexts/MapContext';
 
-class MapyLayer extends Component {
+class MapTileLayer extends Component {
 	constructor(props) {
 		super(props);
 
@@ -10,20 +10,20 @@ class MapyLayer extends Component {
 	}
 
 	componentDidMount() {
-		const context = this.context;
+		const { map } = this.context;
 
-		if (context.map) {
+		if (map) {
 			this.layer = new SMap.Layer.Tile(undefined, this.props.source);
-			context.map.addLayer(this.layer);
+			map.addLayer(this.layer);
 			this.layer.enable();
 		}
 	}
 
 	componentWillUnmount() {
-		const context = this.context;
+		const { map } = this.context;
 
-		if (context.map && this.layer) {
-			context.map.removeLayer(this.layer);
+		if (map && this.layer) {
+			map.removeLayer(this.layer);
 			this.layer.$destructor();
 			this.layer = null;
 		}
@@ -35,17 +35,19 @@ class MapyLayer extends Component {
 	}
 }
 
-MapyLayer.contextType = MapContext;
+MapTileLayer.displayName = 'MapTileLayer';
 
-MapyLayer.propTypes = {
+MapTileLayer.contextType = MapContext;
+
+MapTileLayer.propTypes = {
 	map: PropTypes.instanceOf(SMap),
 	source: PropTypes.string.isRequired,
 };
 
-const ConnectedMapyLayer = props => (
+const ConnectedMapTileLayer = props => (
 	<MapContext.Consumer>
 		{({ map }) => map
-			? <MapyLayer
+			? <MapTileLayer
 				{...props}
 				map={map}
 			/>
@@ -54,4 +56,4 @@ const ConnectedMapyLayer = props => (
 	</MapContext.Consumer>
 );
 
-export default ConnectedMapyLayer;
+export default ConnectedMapTileLayer;

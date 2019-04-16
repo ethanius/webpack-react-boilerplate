@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MapContext from '../../contexts/mapyMap';
+import MapContext from '~/contexts/MapContext';
 
 const DEFAULT_ZOOM = 15;
 // eslint-disable-next-line no-magic-numbers
 const DEFAULT_CENTER = [14.41790, 50.12655];
 
-class MapyMap extends Component {
+class MapContainer extends Component {
 	constructor(props) {
 		super(props);
 
@@ -34,19 +34,20 @@ class MapyMap extends Component {
 
 		return <MapContext.Provider value={{ map: this.map }}>
 			<div {...props} ref={this.mapRef}></div>
-			{this.map ? this.props.children : null}
 		</MapContext.Provider>;
 	}
 }
 
-MapyMap.contextType = MapContext;
+MapContainer.displayName = 'MapContainer';
 
-MapyMap.defaultProps = {
+MapContainer.contextType = MapContext;
+
+MapContainer.defaultProps = {
 	center: DEFAULT_CENTER,
 	zoom: DEFAULT_ZOOM,
 };
 
-MapyMap.propTypes = {
+MapContainer.propTypes = {
 	center: PropTypes.arrayOf(PropTypes.number),
 	zoom: PropTypes.number,
 	children: PropTypes.oneOfType([
@@ -55,4 +56,4 @@ MapyMap.propTypes = {
 	]),
 };
 
-export default MapyMap;
+export default MapContainer;

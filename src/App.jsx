@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import MapyMap from './components/mapyMap';
-import MapyLayer from './components/mapyLayer';
+import MapContainer from '~/components/MapContainer';
+import MapTileLayer from '~/components/MapTileLayer';
 
 const App = () => (
 	<div>
-		<MapyMap
+		<MapContainer
 			style={{
 				width: '600px',
 				height: '600px',
@@ -14,9 +14,9 @@ const App = () => (
 			center={[14.2293256, 50.0172152]}
 			zoom={16}
 		>
-			<MapyLayer source="https://mapserver.mapy.cz/base-m/" />
-			<MapyLayer source="https://mapserver.mapy.cz/relief-m/" />
-		</MapyMap>
+			<MapTileLayer source="https://mapserver.mapy.cz/base-m/" />
+			<MapTileLayer source="https://mapserver.mapy.cz/relief-m/" />
+		</MapContainer>
 	</div>
 );
 
