@@ -14,8 +14,8 @@ const App = () => (
 			center={[14.2293256, 50.0172152]}
 			zoom={16}
 		>
-			<MapyLayer name={SMap.DEF_BASE} />
-			<MapyLayer name={SMap.DEF_RELIEF} />
+			<MapyLayer source="https://mapserver.mapy.cz/base-m/" />
+			<MapyLayer source="https://mapserver.mapy.cz/relief-m/" />
 		</MapyMap>
 	</div>
 );

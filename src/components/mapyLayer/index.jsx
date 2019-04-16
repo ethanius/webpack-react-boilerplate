@@ -3,11 +3,29 @@ import PropTypes from 'prop-types';
 import MapContext from '../../contexts/mapyMap';
 
 class MapyLayer extends Component {
+	constructor(props) {
+		super(props);
+
+		this.layer = null;
+	}
+
 	componentDidMount() {
 		const context = this.context;
 
 		if (context.map) {
-			context.map.addDefaultLayer(this.props.name).enable();
+			this.layer = new SMap.Layer.Tile(undefined, this.props.source);
+			context.map.addLayer(this.layer);
+			this.layer.enable();
+		}
+	}
+
+	componentWillUnmount() {
+		const context = this.context;
+
+		if (context.map && this.layer) {
+			context.map.removeLayer(this.layer);
+			this.layer.$destructor();
+			this.layer = null;
 		}
 	}
 
@@ -20,8 +38,8 @@ class MapyLayer extends Component {
 MapyLayer.contextType = MapContext;
 
 MapyLayer.propTypes = {
-	map: PropTypes.any,
-	name: PropTypes.any,
+	map: PropTypes.instanceOf(SMap),
+	source: PropTypes.string.isRequired,
 };
 
 const ConnectedMapyLayer = props => (

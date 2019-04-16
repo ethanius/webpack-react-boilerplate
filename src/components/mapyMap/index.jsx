@@ -49,7 +49,10 @@ MapyMap.defaultProps = {
 MapyMap.propTypes = {
 	center: PropTypes.arrayOf(PropTypes.number),
 	zoom: PropTypes.number,
-	children: PropTypes.any,
+	children: PropTypes.oneOfType([
+		PropTypes.arrayOf(PropTypes.node),
+		PropTypes.node,
+	]),
 };
 
 export default MapyMap;
