@@ -29,6 +29,12 @@ class MapTileLayer extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.source !== this.props.source) {
+			this.layer.setURL(this.props.source);
+		}
+	}
+
 	// eslint-disable-next-line class-methods-use-this
 	render() {
 		return null;
