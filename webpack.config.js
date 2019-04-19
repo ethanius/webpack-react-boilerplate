@@ -117,6 +117,9 @@ const config = env => {
 				'.jsx',
 				'.mjs',
 			],
+			alias: {
+				'~': path.resolve(__dirname, 'src/'),
+			},
 		},
 		devServer: {
 			contentBase: './dist',

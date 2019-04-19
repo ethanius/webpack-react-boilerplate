@@ -49,6 +49,7 @@ module.exports = {
 		"max-classes-per-file": "error",
 		"no-alert": "error",
 		"no-caller": "error",
+		"no-console": "warn",
 		"no-else-return": "error",
 		"no-empty-pattern": "error",
 		"no-eq-null": "error",
@@ -83,6 +84,9 @@ module.exports = {
 		"no-unused-expressions": ["error", {
 			"allowShortCircuit": true,
 			"allowTernary": true
+		}],
+		"no-unused-vars": ["error", {
+			"ignoreRestSiblings": true,
 		}],
 		"no-useless-call": "error",
 		"no-useless-catch": "error",
