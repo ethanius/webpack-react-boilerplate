@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MapContext from '~/contexts/MapContext';
+import MapiContext from '~/contexts/MapiContext';
 
 const DEFAULT_ZOOM = 15;
 // eslint-disable-next-line no-magic-numbers
 const DEFAULT_CENTER = [14.41790, 50.12655];
 
-class MapContainer extends Component {
+class MapiContainer extends Component {
 	constructor(props) {
 		super(props);
 
@@ -32,22 +32,22 @@ class MapContainer extends Component {
 	render() {
 		const { center, zoom, ...props } = this.props;
 
-		return <MapContext.Provider value={{ map: this.map }}>
+		return <MapiContext.Provider value={{ map: this.map }}>
 			<div {...props} ref={this.mapRef}></div>
-		</MapContext.Provider>;
+		</MapiContext.Provider>;
 	}
 }
 
-MapContainer.displayName = 'MapContainer';
+MapiContainer.displayName = 'MapiContainer';
 
-MapContainer.contextType = MapContext;
+MapiContainer.contextType = MapiContext;
 
-MapContainer.defaultProps = {
+MapiContainer.defaultProps = {
 	center: DEFAULT_CENTER,
 	zoom: DEFAULT_ZOOM,
 };
 
-MapContainer.propTypes = {
+MapiContainer.propTypes = {
 	center: PropTypes.arrayOf(PropTypes.number),
 	zoom: PropTypes.number,
 	children: PropTypes.oneOfType([
@@ -56,4 +56,4 @@ MapContainer.propTypes = {
 	]),
 };
 
-export default MapContainer;
+export default MapiContainer;

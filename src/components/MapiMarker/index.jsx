@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class MapyMarker extends Component {
+class MapiMarker extends Component {
 	constructor(props) {
 		super(props);
 
@@ -15,11 +15,11 @@ class MapyMarker extends Component {
 	}
 }
 
-MapyMarker.defaultProps = {
+MapiMarker.defaultProps = {
 };
 
-MapyMarker.propTypes = {
+MapiMarker.propTypes = {
 	coords: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default MapyMarker;
+export default MapiMarker;
