@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MapContext from '~/contexts/MapContext';
+import MapiContext from '~/contexts/MapiContext';
 
-class MapTileLayer extends Component {
+class MapiTileLayer extends Component {
 	constructor(props) {
 		super(props);
 
@@ -41,25 +41,25 @@ class MapTileLayer extends Component {
 	}
 }
 
-MapTileLayer.displayName = 'MapTileLayer';
+MapiTileLayer.displayName = 'MapiTileLayer';
 
-MapTileLayer.contextType = MapContext;
+MapiTileLayer.contextType = MapiContext;
 
-MapTileLayer.propTypes = {
+MapiTileLayer.propTypes = {
 	map: PropTypes.instanceOf(SMap),
 	source: PropTypes.string.isRequired,
 };
 
-const ConnectedMapTileLayer = props => (
-	<MapContext.Consumer>
+const ConnectedMapiTileLayer = props => (
+	<MapiContext.Consumer>
 		{({ map }) => map
-			? <MapTileLayer
+			? <MapiTileLayer
 				{...props}
 				map={map}
 			/>
 			: null
 		}
-	</MapContext.Consumer>
+	</MapiContext.Consumer>
 );
 
-export default ConnectedMapTileLayer;
+export default ConnectedMapiTileLayer;
