@@ -20,9 +20,10 @@ const config = env => {
 		]
 		: [];
 	const plugins = [
-		new CleanWebpackPlugin(['dist']),
+		new CleanWebpackPlugin(),
 		new StyleLintPlugin({
 			syntax: 'less',
+			files: '**/*.(le|c)ss',
 		}),
 		...analyze,
 		new HtmlWebpackPlugin({
