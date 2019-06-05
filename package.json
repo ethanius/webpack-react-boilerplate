@@ -13,8 +13,12 @@
 	"author": "Jakub Kraft",
 	"license": "ISC",
 	"browserslist": [
-		"last 5 Chrome versions",
-		"last 5 FF versions"
+		"last 2 versions",
+		"not dead",
+		"> 1% in CZ",
+		"not OperaMini all",
+		"not and_qq < 2",
+		"not baidu < 8"
 	],
 	"sideEffects": [
 		"@babel/polyfill",
