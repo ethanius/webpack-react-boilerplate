@@ -132,7 +132,6 @@ const config = env => {
 					cache: true,
 					parallel: true,
 					sourceMap: true,
-					parallel: true,
 				}),
 				new OptimizeCSSAssetsPlugin({}),
 			],
