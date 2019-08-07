@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 const config = env => {
@@ -20,7 +20,7 @@ const config = env => {
 		]
 		: [];
 	const plugins = [
-		new CleanWebpackPlugin(['dist']),
+		new CleanWebpackPlugin(),
 		new StyleLintPlugin({
 			syntax: 'less',
 		}),
