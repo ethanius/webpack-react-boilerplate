@@ -23,6 +23,7 @@ const config = env => {
 		new CleanWebpackPlugin(),
 		new StyleLintPlugin({
 			syntax: 'less',
+			files: '**/*.l?(e|c)ss',
 		}),
 		...analyze,
 		new HtmlWebpackPlugin({
