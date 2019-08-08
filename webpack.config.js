@@ -33,7 +33,7 @@ const config = env => {
 	];
 
 	return {
-		entry: './src/index.jsx',
+		entry: './src/index.tsx',
 		output: {
 			path: path.resolve(__dirname, 'dist'),
 			filename: production ? '[name].[contenthash].js' : '[name].js',
@@ -43,12 +43,12 @@ const config = env => {
 			rules: [
 				{
 					enforce: 'pre',
-					test: /\.(js|jsx)$/u,
+					test: /\.(ts|js)x?$/u,
 					exclude: /node_modules/u,
 					loader: 'eslint-loader',
 				},
 				{
-					test: /\.(js|jsx)$/u,
+					test: /\.(ts|js)x?$/u,
 					exclude: /node_modules/u,
 					use: {
 						loader: 'babel-loader',
@@ -62,10 +62,12 @@ const config = env => {
 										corejs: '3',
 									},
 								],
+								'@babel/preset-typescript',
 								'@babel/preset-react',
 							],
 							plugins: [
 								'@babel/plugin-proposal-class-properties',
+								'@babel/plugin-proposal-object-rest-spread',
 								'@babel/plugin-syntax-dynamic-import',
 								production
 									? ['transform-react-remove-prop-types', {
@@ -77,7 +79,7 @@ const config = env => {
 					},
 				},
 				{
-					test: /\.(js|jsx)?$/u,
+					test: /\.(ts|js)x?$/u,
 					include: /node_modules/u,
 					use: ['react-hot-loader/webpack'],
 				},
@@ -114,6 +116,8 @@ const config = env => {
 		},
 		resolve: {
 			extensions: [
+				'.ts',
+				'.tsx',
 				'.js',
 				'.jsx',
 				'.mjs',
