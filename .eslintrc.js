@@ -1,6 +1,6 @@
 /* eslint-env amd, node */
 module.exports = {
-	parser: "babel-eslint",
+	parser: "@typescript-eslint/parser",
 	env: {
 		browser: true,
 		es6: true,
@@ -18,11 +18,12 @@ module.exports = {
 		},
 	},
 	"plugins": [
-		"react"
+		"react",
+		"@typescript-eslint",
 	],
 	extends: [
 		"eslint:recommended",
-		"plugin:react/recommended"
+		"plugin:react/recommended",
 	],
 	rules: {
 		// Possible Errors
@@ -85,8 +86,11 @@ module.exports = {
 			"allowShortCircuit": true,
 			"allowTernary": true
 		}],
-		"no-unused-vars": ["error", {
-			"ignoreRestSiblings": true,
+		"no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error", {
+			"vars": "all",
+			"args": "after-used",
+			"ignoreRestSiblings": true
 		}],
 		"no-useless-call": "error",
 		"no-useless-catch": "error",

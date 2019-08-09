@@ -22,6 +22,7 @@ interface Props {
 
 export default abstract class Provider {
 	protected map: SMap;
+
 	protected root: HTMLElement;
 
 	constructor({ map, root }: Props) {
