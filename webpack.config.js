@@ -28,6 +28,8 @@ const config = env => {
 		...analyze,
 		new HtmlWebpackPlugin({
 			template: 'public/index.html',
+			title: 'SMapi',
+			favicon: './public/favicon.ico',
 		}),
 		...miniCssExtractPlugin,
 	];
