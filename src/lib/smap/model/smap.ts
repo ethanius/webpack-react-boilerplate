@@ -4,15 +4,21 @@ data a vyšle signál všem, co poslouchají. Výhoda je, že rozhraní SMap bud
 bude který provider umět zpracovat, to je na něm a je to hezky oddělené.
 */
 
-import { Viewport, Payload } from "./types";
-import { MAP_UPDATE } from "./actions";
+import { Viewport, ViewportAction } from './types';
+import { updateViewport } from '../util';
 
 export default class SMap {
-	protected mapa: Viewport;
+	protected map: Viewport;
+
 	protected callbacks: Function[];
 
-	constructor() {
+	constructor({
+		viewport,
+	}: {
+		viewport: Viewport,
+	}) {
 		this.callbacks = [];
+		this.map = viewport;
 	}
 
 	addCallback(callback: Function) {
@@ -21,25 +27,26 @@ export default class SMap {
 
 	removeCallback(callback: Function) {
 		const index = this.callbacks.indexOf(callback);
+
 		if (index !== -1) {
 			this.callbacks.splice(index, 1);
 		}
 	}
 
-	set map(map: Viewport) {
-		this.mapa = map;
-		const payload: Payload = {
-			action: MAP_UPDATE,
-			entity: this.mapa,
-		};
-		this.emmit(payload);
+	set viewport(viewport: Viewport) {
+		const prevViewport: Viewport = this.viewport;
+		const action: ViewportAction = updateViewport(this.map, viewport);
+
+		this.map = viewport;
+
+		this.emmit(action, prevViewport);
 	}
 
-	get map(): Viewport {
-		return this.mapa;
+	get viewport(): Viewport {
+		return JSON.parse(JSON.stringify(this.map));
 	}
 
-	protected emmit(payload: Payload) {
-		this.callbacks.forEach(callback => callback(payload));
+	protected emmit(action: ViewportAction, prevViewport: Viewport) {
+		this.callbacks.forEach(callback => callback(action, prevViewport));
 	}
 }

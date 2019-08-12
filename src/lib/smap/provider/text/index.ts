@@ -1,15 +1,10 @@
-/*import Provider from '../';
-import { ViewportAction, Marker, Point, Coords } from '../../model/types';
-import { MAP_UPDATE, MARKER_ADD } from '../../model/actions';
+import Provider from '../';
+import { ViewportAction, Point, Coords } from '../../model/types';
 
-export default class MapboxProvider extends Provider {
+export default class TextProvider extends Provider {
 	protected callback(action: ViewportAction): void {
-	}
-
-	private addMarker(marker: Marker) {
-		// nejak nahod do mapy marker
 		// eslint-disable-next-line no-console
-		console.log(this.map, marker);
+		console.log(this.map, action);
 	}
 
 	pointToCoords(point: Point): Coords {
@@ -32,4 +27,3 @@ export default class MapboxProvider extends Provider {
 		};
 	}
 }
-*/

@@ -66,7 +66,7 @@ module.exports = {
 		"no-loop-func": "error",
 		"no-magic-numbers": ["error", {
 			"ignoreArrayIndexes": true,
-			"ignore": [1]
+			"ignore": [-1, 0, 1]
 		}],
 		"no-multi-spaces": "error",
 		"no-multi-str": "error",
@@ -132,7 +132,9 @@ module.exports = {
 		"func-call-spacing": ["error", "never"],
 		"func-names": ["error", "as-needed"],
 		"function-paren-newline": ["error", "consistent"],
-		"id-length": "error",
+		"id-length": ["error", {
+			"properties": "never"
+		}],
 		"implicit-arrow-linebreak": ["error", "beside"],
 		"indent": ["error", "tab", {
 			"SwitchCase": 1,

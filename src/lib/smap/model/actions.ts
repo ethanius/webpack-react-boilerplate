@@ -1,5 +1,3 @@
-export const MAP_UPDATE: string = 'MAP_UPDATE';
-
 export const MARKER_ADD: string = 'MARKER_ADD';
 export const MARKER_REMOVE: string = 'MARKER_REMOVE';
 export const MARKER_UPDATE: string = 'MARKER_UPDATE';

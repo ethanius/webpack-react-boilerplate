@@ -13,30 +13,38 @@ chtít kreslit.
 */
 
 import SMap from '../model/smap';
-import { Payload, Point, Coords } from '../model/types';
+import { ViewportAction, Point, Coords } from '../model/types';
+
+export interface IProvider {
+	setSMap(map: SMap): void;
+	pointToCoords(point: Point): Coords;
+	coordsToPoint(point: Coords): Point;
+}
 
 interface Props {
 	map: SMap;
-	root: HTMLElement;
 }
 
-export default abstract class Provider {
+export default abstract class Provider implements IProvider {
 	protected map: SMap;
 
 	protected root: HTMLElement;
 
-	constructor({ map, root }: Props) {
-		this.map = map;
-		this.root = root;
-
-		this.map.addCallback(this.callback);
+	constructor({ map }: Props) {
+		this.setSMap(map);
 	}
 
 	destroy() {
 		this.map.removeCallback(this.callback);
 	}
 
-	protected abstract callback(payload: Payload): void;
+	setSMap(map: SMap) {
+		this.map = map;
+
+		this.map.addCallback(this.callback);
+	}
+
+	protected abstract callback(payload: ViewportAction): void;
 
 	abstract pointToCoords(point: Point): Coords;
 

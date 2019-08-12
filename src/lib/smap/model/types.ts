@@ -10,7 +10,7 @@ Tím, že je mapa samotná v zásadě jen datová struktura, tak už věci jako 
  * @property {number} latitude Latitude in WGS84
  * @property {number} [longitude] Altitude in metres above sea level
  */
-export interface Coords {
+export type Coords = {
 	longitude: number;
 	latitude: number;
 	altitude?: number;
@@ -23,7 +23,7 @@ export interface Coords {
  * @property {number} y Vertical coordinate
  * @property {number} [z] Z-index
  */
-export interface Point {
+export type Point = {
 	x: number;
 	y: number;
 	z?: number;
@@ -36,25 +36,28 @@ export interface Point {
  * @property {Point} anchor Pixel coordinates of the marker relative to the geographical coordinates
  * @property {HTMLElement} element HTML representation of the marker
  */
-export interface Marker {
+export type Marker = {
+	id: string;
 	coords: Coords;
 	anchor: Point;
 	element: HTMLElement;
 }
 
 // TODO: domyslet geometrie
-export interface Geometry {
+export type Geometry = {
+	id: string;
 	type: any;
 }
 
-export interface Layer {
+export type Layer = {
+	id: string;
 	rasterURLs?: string[];
 	vectorURLs?: string[];
 	markers?: Marker[];
 	geometries?: Geometry[];
 }
 
-export interface Viewport {
+export type Viewport = {
 	center: Coords;
 	zoom: number;
 	layers: Layer[];
@@ -66,14 +69,21 @@ export interface Viewport {
  * @property {Coords} leftTop Left top coordinates
  * @property {Coords} rightBottom Right bottom coordinates
  */
-export interface BBox {
+export type BBox = {
 	leftTop: Coords;
 	rightBottom: Coords;
 }
 
-// TODO: spravne typy
-export interface Payload {
-	action: string;
-	entity: any;
-	data?: any;
+export type LayerAction = {
+
+}
+
+export type ViewportAction = {
+	center?: Coords;
+	zoom?: number;
+	layers?: {
+		remove: LayerAction[],
+		update: LayerAction[],
+		create: LayerAction[],
+	}
 }
