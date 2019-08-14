@@ -2,11 +2,15 @@ import React from 'react';
 
 import { map } from '~/services/map';
 import TextMap from '~/components/TextMap';
+import MapboxMap from '~/components/MapboxMap';
+import OpenLayersMap from '~/components/OpenLayersMap';
 import ControlPanel from '~/components/ControlPanel';
 
 import './index.less';
 
 const Home = () => <div className="home">
+	<MapboxMap map={map} />
+	<OpenLayersMap map={map} />
 	<TextMap map={map} />
 	<ControlPanel map={map} />
 </div>;

@@ -12,6 +12,11 @@ module.exports = {
 			jsx: true
 		}
 	},
+	/*
+	"globals": {
+		"mapboxgl": "readonly",
+	},
+	*/
 	"settings": {
 		"react": {
 			"version": "detect",
