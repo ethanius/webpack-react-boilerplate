@@ -6,6 +6,9 @@ import './index.less';
 import { Coords } from '~/lib/smap/model/types';
 
 const STEP = 0.05;
+const ZOOM_ANIMATION_STEP = 0.01;
+const MIN_ZOOM = 2;
+const MAX_ZOOM = 18;
 
 interface IProps {
 	map: SMap;
@@ -13,6 +16,10 @@ interface IProps {
 
 class ControlPanel extends React.Component<IProps> {
 	private sMap: SMap;
+
+	private zoomAnimationRequest: number;
+
+	private zoomIn: boolean = true;
 
 	static displayName = 'ControlPanel';
 
@@ -23,12 +30,16 @@ class ControlPanel extends React.Component<IProps> {
 	constructor(props: IProps) {
 		super(props);
 
+		this.sMap = props.map;
+
 		this.handleZoomIn = this.handleZoomIn.bind(this);
 		this.handleZoomOut = this.handleZoomOut.bind(this);
 		this.handleMoveUp = this.handleMoveUp.bind(this);
 		this.handleMoveDown = this.handleMoveDown.bind(this);
 		this.handleMoveLeft = this.handleMoveLeft.bind(this);
 		this.handleMoveRight = this.handleMoveRight.bind(this);
+		this.toggleZoomAnimation = this.toggleZoomAnimation.bind(this);
+		this.animationStep = this.animationStep.bind(this);
 	}
 
 	render() {
@@ -40,6 +51,8 @@ class ControlPanel extends React.Component<IProps> {
 			<button type="button" onClick={this.handleMoveDown}>⬇</button>
 			<button type="button" onClick={this.handleMoveLeft}>⬅</button>
 			<button type="button" onClick={this.handleMoveRight}>➡</button>
+			<br />
+			<button type="button" onClick={this.toggleZoomAnimation}>Bounce</button>
 		</div>;
 	}
 
@@ -104,6 +117,34 @@ class ControlPanel extends React.Component<IProps> {
 			...center,
 			longitude: center.longitude + STEP,
 		});
+	}
+
+	private toggleZoomAnimation() {
+		if (this.zoomAnimationRequest) {
+			cancelAnimationFrame(this.zoomAnimationRequest);
+			this.zoomAnimationRequest = undefined;
+		} else {
+			this.zoomAnimationRequest = requestAnimationFrame(this.animationStep);
+		}
+	}
+
+	private animationStep() {
+		const viewport = this.sMap.viewport;
+
+		if (viewport.zoom >= MAX_ZOOM) {
+			this.zoomIn = false;
+		}
+
+		if (viewport.zoom <= MIN_ZOOM) {
+			this.zoomIn = true;
+		}
+
+		this.sMap.viewport = {
+			...viewport,
+			zoom: this.zoomIn ? viewport.zoom + ZOOM_ANIMATION_STEP : viewport.zoom - ZOOM_ANIMATION_STEP,
+		};
+
+		this.zoomAnimationRequest = requestAnimationFrame(this.animationStep);
 	}
 }
 
