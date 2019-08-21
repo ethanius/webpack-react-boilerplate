@@ -1,6 +1,6 @@
 /* eslint-env amd, node */
 module.exports = {
-	parser: "babel-eslint",
+	parser: "@typescript-eslint/parser",
 	env: {
 		browser: true,
 		es6: true,
@@ -18,11 +18,12 @@ module.exports = {
 		},
 	},
 	"plugins": [
-		"react"
+		"react",
+		"@typescript-eslint",
 	],
 	extends: [
 		"eslint:recommended",
-		"plugin:react/recommended"
+		"plugin:react/recommended",
 	],
 	rules: {
 		// Possible Errors
@@ -65,7 +66,7 @@ module.exports = {
 		"no-loop-func": "error",
 		"no-magic-numbers": ["error", {
 			"ignoreArrayIndexes": true,
-			"ignore": [1]
+			"ignore": [-1, 0, 1]
 		}],
 		"no-multi-spaces": "error",
 		"no-multi-str": "error",
@@ -85,8 +86,11 @@ module.exports = {
 			"allowShortCircuit": true,
 			"allowTernary": true
 		}],
-		"no-unused-vars": ["error", {
-			"ignoreRestSiblings": true,
+		"no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error", {
+			"vars": "all",
+			"args": "after-used",
+			"ignoreRestSiblings": true
 		}],
 		"no-useless-call": "error",
 		"no-useless-catch": "error",
@@ -128,7 +132,9 @@ module.exports = {
 		"func-call-spacing": ["error", "never"],
 		"func-names": ["error", "as-needed"],
 		"function-paren-newline": ["error", "consistent"],
-		"id-length": "error",
+		"id-length": ["error", {
+			"properties": "never"
+		}],
 		"implicit-arrow-linebreak": ["error", "beside"],
 		"indent": ["error", "tab", {
 			"SwitchCase": 1,
@@ -232,7 +238,5 @@ module.exports = {
 		"react/no-string-refs": "error",
 		"react/no-this-in-sfc": "error",
 		"react/no-unsafe": "error",
-
-		// "react/jsx-indent": [4, "tab"]
 	}
 };
