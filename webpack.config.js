@@ -33,7 +33,10 @@ const config = env => {
 	];
 
 	return {
-		entry: './src/index.jsx',
+		entry: [
+			'core-js/modules/es.array.iterator', // je treba manualne pridat pro podporu import() v IE11
+			'./src/index.jsx',
+		],
 		output: {
 			path: path.resolve(__dirname, 'dist'),
 			filename: production ? '[name].[contenthash].js' : '[name].js',
@@ -66,6 +69,7 @@ const config = env => {
 							],
 							plugins: [
 								'@babel/plugin-proposal-class-properties',
+								'@babel/plugin-proposal-object-rest-spread',
 								'@babel/plugin-syntax-dynamic-import',
 								production
 									? ['transform-react-remove-prop-types', {

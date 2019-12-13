@@ -21,13 +21,13 @@
 		"not baidu < 8"
 	],
 	"sideEffects": [
-		"@babel/polyfill",
 		"*.css",
 		"*.less"
 	],
 	"devDependencies": {
 		"@babel/core": "^7.7.5",
 		"@babel/plugin-proposal-class-properties": "^7.7.4",
+		"@babel/plugin-proposal-object-rest-spread": "^7.7.4",
 		"@babel/plugin-syntax-dynamic-import": "^7.7.4",
 		"@babel/preset-env": "^7.7.5",
 		"@babel/preset-react": "^7.7.4",
@@ -50,6 +50,7 @@
 		"less-loader": "^5.0.0",
 		"mini-css-extract-plugin": "^0.8.0",
 		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"postcss-custom-properties": "^9.0.2",
 		"postcss-loader": "^3.0.0",
 		"style-loader": "^1.0.1",
 		"stylelint-webpack-plugin": "^1.1.2",
@@ -61,7 +62,6 @@
 		"webpack-dev-server": "^3.9.0"
 	},
 	"dependencies": {
-		"@babel/polyfill": "^7.7.0",
 		"core-js": "^3.4.7",
 		"prop-types": "^15.7.2",
 		"react": "^16.12.0",
