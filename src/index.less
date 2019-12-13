@@ -1,6 +1,21 @@
-h1 {
-	color: red;
+:root {
+	--primary-background-color: #ffffff;
+	--primary-text-color: #ff0000;
+}
 
+@media screen and (prefers-color-scheme: dark) {
+	:root {
+		--primary-background-color: #000000;
+		--primary-text-color: #ffffff;
+	}
+}
+
+body {
+	color: var(--primary-text-color);
+	background: var(--primary-background-color);
+}
+
+h1 {
 	span {
 		color: green;
 	}

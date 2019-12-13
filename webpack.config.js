@@ -33,7 +33,10 @@ const config = env => {
 	];
 
 	return {
-		entry: './src/index.tsx',
+		entry: [
+			'core-js/modules/es.array.iterator', // je treba manualne pridat pro podporu import() v IE11
+			'./src/index.tsx',
+		],
 		output: {
 			path: path.resolve(__dirname, 'dist'),
 			filename: production ? '[name].[contenthash].js' : '[name].js',
