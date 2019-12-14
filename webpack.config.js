@@ -150,12 +150,6 @@ const config = env => {
 						name: 'vendor',
 						enforce: true,
 					},
-					styles: {
-						name: 'styles',
-						test: /\.(css|less)$/u,
-						chunks: 'all',
-						enforce: true,
-					},
 				},
 			},
 		},
