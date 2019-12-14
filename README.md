@@ -5,11 +5,13 @@ Pomocí tohohle lze velmi rychle rozjet projekt s Reactem. Použité nástroje:
 * Less
 * Babel 7
   * do produkce se odstraňuje PropTypes
-  * v devu je hort reload modul pro React
+  * v devu je hot reload modul pro React
 * ESLint
 * Stylelint
 * Browserslist
-* Autoprefixer
+* PostCSS
+  * Autoprefixer
+  * CSS proměnné
 * Webpack 4
   * Code splitting (otestováno s pomocí React.lazy a React.Suspension)
   * Minifikace a verzování assetů
