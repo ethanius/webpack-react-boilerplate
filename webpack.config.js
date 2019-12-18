@@ -7,6 +7,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const config = env => {
 	const production = env && env.NODE_ENV === 'production';
@@ -16,6 +17,23 @@ const config = env => {
 			new MiniCssExtractPlugin({
 				chunkFilename: '[id].css',
 				filename: '[name].[contenthash].css',
+			}),
+		]
+		: [];
+	const compression = production
+		? [
+			new CompressionPlugin({
+				filename: '[path].gz[query]',
+				algorithm: 'gzip',
+				test: /\.js$|\.css$|\.html$/,
+				minRatio: 1,
+			}),
+			new CompressionPlugin({
+				filename: '[path].br[query]',
+				algorithm: 'brotliCompress',
+				test: /\.(js|css|html|svg)$/,
+				compressionOptions: { level: 11 },
+				minRatio: 1,
 			}),
 		]
 		: [];
@@ -30,6 +48,7 @@ const config = env => {
 			template: 'public/index.html',
 		}),
 		...miniCssExtractPlugin,
+		...compression,
 	];
 
 	return {
