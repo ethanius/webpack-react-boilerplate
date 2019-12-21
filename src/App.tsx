@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { hot } from 'react-hot-loader/root';
 
-const LazyImage = React.lazy(() => import('./Image' /* webpackChunkName: "image" */));
+const LazyImage = React.lazy(() => import('./components/Image' /* webpackChunkName: "image" */));
 
 const App = () => {
 	const name: string = 'Tomato';
