@@ -53,7 +53,8 @@ const config = env => {
 
 	return {
 		entry: [
-			'core-js/modules/es.array.iterator', // je treba manualne pridat pro podporu import() v IE11
+			// je treba manualne pridat pro podporu import() v IE11
+			'core-js/modules/es.array.iterator',
 			'./src/index.jsx',
 		],
 		output: {
@@ -99,11 +100,13 @@ const config = env => {
 						},
 					},
 				},
-				{
-					test: /\.(js|jsx)?$/u,
-					include: /node_modules/u,
-					use: ['react-hot-loader/webpack'],
-				},
+				...production
+					? []
+					: [{
+						test: /\.(ts|js)x?$/u,
+						include: /node_modules/u,
+						use: ['react-hot-loader/webpack'],
+					}],
 				{
 					test: /\.(css|less)$/u,
 					use: [
