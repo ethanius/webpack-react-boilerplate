@@ -25,13 +25,13 @@ const config = env => {
 			new CompressionPlugin({
 				filename: '[path].gz[query]',
 				algorithm: 'gzip',
-				test: /\.js$|\.css$|\.html$/,
+				test: /\.js$|\.css$|\.html$/u,
 				minRatio: 1,
 			}),
 			new CompressionPlugin({
 				filename: '[path].br[query]',
 				algorithm: 'brotliCompress',
-				test: /\.(js|css|html|svg)$/,
+				test: /\.(js|css|html|svg)$/u,
 				compressionOptions: { level: 11 },
 				minRatio: 1,
 			}),
@@ -53,7 +53,8 @@ const config = env => {
 
 	return {
 		entry: [
-			'core-js/modules/es.array.iterator', // je treba manualne pridat pro podporu import() v IE11
+			// je treba manualne pridat pro podporu import() v IE11
+			'core-js/modules/es.array.iterator',
 			'./src/index.tsx',
 		],
 		output: {
@@ -100,11 +101,13 @@ const config = env => {
 						},
 					},
 				},
-				{
-					test: /\.(ts|js)x?$/u,
-					include: /node_modules/u,
-					use: ['react-hot-loader/webpack'],
-				},
+				...production
+					? []
+					: [{
+						test: /\.(ts|js)x?$/u,
+						include: /node_modules/u,
+						use: ['react-hot-loader/webpack'],
+					}],
 				{
 					test: /\.(css|less)$/u,
 					use: [
