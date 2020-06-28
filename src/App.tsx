@@ -10,7 +10,7 @@ const App = () => {
 		<div>
 			<h1>Hello <span>{name}</span>!</h1>
 			<Suspense fallback={<div>Loading...</div>}>
-				<LazyImage src="https://satyr.io/1200x16:9" />
+				<LazyImage src="https://via.placeholder.com/1200x400" />
 			</Suspense>
 		</div>
 	);
